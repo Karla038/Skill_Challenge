@@ -1,38 +1,56 @@
 package com.methaporce.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GestorPelicula {
 
-    private int id;
-    private String nombre;
-    private boolean disponible;
+    private List<Pelicula> peliculas;
 
-    public GestorPelicula( int id, String nombre, boolean disponible){
-        this.id = id;
-        this.nombre = nombre;
-        this.disponible = disponible;
+    public GestorPelicula() {
+        this.peliculas = new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
+    public void agregarPelicula ( Pelicula pelicula) {
+        peliculas.add(pelicula);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void eliminarPelicula (int id){
+        peliculas.removeIf( pelicula -> pelicula.getId() == id);
     }
 
-    public String getNombre() {
-        return nombre;
+    public List<Pelicula> obtenerPeliculas (){
+
+        return new ArrayList<>(peliculas);
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public List<Pelicula> obtenerPeliculasDisponibles(){
+        List<Pelicula> disponibles = new ArrayList<>();
+        for (Pelicula pelicula : peliculas) {
+            if (pelicula.isDisponible()) {
+                disponibles.add(pelicula);
+            }
+        }
+        return disponibles;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public List<Pelicula> obtenerPeliculasNoDisponibles(){
+        List<Pelicula> noDisponibles = new ArrayList<>();
+        for (Pelicula pelicula : peliculas) {
+            if (!pelicula.isDisponible()) {
+                noDisponibles.add(pelicula);
+            }
+        }
+        return noDisponibles;
     }
 
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
+    public void marcarPeliculaComoDisponible( int id) {
+        for (Pelicula pelicula : peliculas) {
+            if (pelicula.getId() == id) {
+                pelicula.setDisponible(true);
+                break;
+            }
+        }
     }
+
 }
