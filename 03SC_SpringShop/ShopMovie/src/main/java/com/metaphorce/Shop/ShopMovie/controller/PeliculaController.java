@@ -1,7 +1,9 @@
 package com.metaphorce.Shop.ShopMovie.controller;
 
+import com.metaphorce.Shop.ShopMovie.dto.PeliculaDTO;
 import com.metaphorce.Shop.ShopMovie.entity.PeliculaEntity;
 import com.metaphorce.Shop.ShopMovie.service.PeliculaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,11 @@ public class PeliculaController {
     private PeliculaService peliculaService;
 
     @PostMapping
-    public PeliculaEntity agregarPelicula(@RequestBody PeliculaEntity pelicula) {
+    public PeliculaEntity agregarPelicula(@Valid @RequestBody PeliculaDTO peliculaDTO) {
+        PeliculaEntity pelicula = new PeliculaEntity();
+        pelicula.setTitulo(peliculaDTO.getTitulo());
+        pelicula.setGenero(peliculaDTO.getGenero());
+        pelicula.setDisponible(peliculaDTO.isDisponible());
         return peliculaService.agregarPelicula(pelicula);
     }
 
